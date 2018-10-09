@@ -1,0 +1,65 @@
+<form [formGroup]="form">
+  <p-accordion>
+
+    <p-accordionTab header="Input para Moedas">
+      <div class="ui-g">
+        <div class="ui-g-6">
+          <input type="text" pInputText formControlName="dinheiro" currencyMask />
+        </div>
+        <div class="ui-g-6">
+          <input type="text" pInputText formControlName="peso" currencyMask min="0" max="300.00" />
+          {{ form.controls.peso.valid }}
+        </div>
+        <div class="ui-g-12">
+          {{ form.controls.value | json }}
+        </div>
+      </div>
+    </p-accordionTab>
+
+    <p-accordionTab header="Inputs de Telefones">
+      <div class="ui-g">
+        <div class="ui-g-4">
+          <input type="text" pInputText formControlName="telefone" mask='(00) 00009-0000'>
+        </div>
+        <div class="ui-g-4">
+          <input type="text" pInputText formControlName="telefoneCelular" mask='(00) 00009-0000'>
+        </div>
+        <div class="ui-g-4">
+          <input type="text" pInputText formControlName="telefoneFixo" mask='(00) 0000-0000'> 
+        </div>
+      </div>
+    </p-accordionTab>
+
+    <p-accordionTab header="Upload de arquivos">
+      <p-fileUpload name="demo[]" multiple="multiple">
+
+          <ng-template pTemplate="toolbar">
+              <div>Upload 3 Files</div>
+          </ng-template>
+          <ng-template let-file pTemplate="file">
+              <div style="display: block; background-color: cyan">Arquivo: {{ file.name }} {{ file | json }}</div>
+          </ng-template>
+          <ng-template pTemplate="content">
+            <div>
+              <ul *ngIf="uploadedFiles.length">
+                <li *ngFor="let file of uploadedFiles">{{file.name}} - {{file.size}} bytes</li>
+              </ul>
+            </div>
+          </ng-template>
+
+      </p-fileUpload>
+    </p-accordionTab>
+
+  </p-accordion>
+
+  <br>
+  <hr>
+  <textarea style="width: 100%" rows='15'>
+    {{ form.value | json }}
+  </textarea>
+  <br>
+  <hr>
+  {{ form.controls.dinheiro.value | currency:'R$ ' }}
+  <br>
+  {{ dataAtual | date:'full' }} ({{ dataAtual | date:'shortDate' }})
+</form>
